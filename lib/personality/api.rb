@@ -6,19 +6,19 @@ module Personality
       # Allow tweets to command flocks
       case data.text.downcase
       when 'dance'
-        Instruction.convert_to_arduino_char('ACTION - DANCE')
+        'ACTION - DANCE'
       when 'rotate'
-        Instruction.convert_to_arduino_char('ACTION - ROTATE')
+        'ACTION - ROTATE'
       when 'nod'
-        Instruction.convert_to_arduino_char('ACTION - NOD')
+        'ACTION - NOD'
       when 'stop'
-        Instruction.convert_to_arduino_char('ACTION - STOP')
+        'ACTION - STOP'
       when 'green'
-        Instruction.convert_to_arduino_char('COLOR - GREEN')
+        'COLOR - GREEN'
       when 'red'
-        Instruction.convert_to_arduino_char('COLOR - RED')
+        'COLOR - RED'
       when 'blue'
-        Instruction.convert_to_arduino_char('COLOR - BLUE')
+        'COLOR - BLUE'
       end
     end
   end

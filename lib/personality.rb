@@ -10,7 +10,7 @@ module Personality
         # Retweet announcement
         twitter_client.retweet([data])
         # Send flocks into alert mode!
-        return Instruction.convert_to_arduino_char('ACTION - ALERT')
+        return 'ACTION - ALERT'
       end
 
       # Generate individual personality reactions

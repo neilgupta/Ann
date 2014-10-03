@@ -4,19 +4,19 @@ module Personality
       return unless sensor_type == 'weather'
 
       if data.precipProbability > 0.7
-        Instruction.convert_to_arduino_char('WEATHER - RAINY')
+        'WEATHER - RAINY'
       elsif Time.now > night && Time.now < dawn
-        Instruction.convert_to_arduino_char('WEATHER - DARK')
+        'WEATHER - DARK'
       elsif Time.now > dawn && Time.now < morning
-        Instruction.convert_to_arduino_char('WEATHER - SUNRISE')
+        'WEATHER - SUNRISE'
       elsif data.cloudCover > 0.8 || data.visibility < 3
-        Instruction.convert_to_arduino_char('WEATHER - CLOUDY')
+        'WEATHER - CLOUDY'
       elsif data.temperature > 70
-        Instruction.convert_to_arduino_char('WEATHER - SUNNY')
+        'WEATHER - SUNNY'
       elsif data.temperature > 30
-        Instruction.convert_to_arduino_char('WEATHER - COLD')
+        'WEATHER - COLD'
       elsif data.temperature <= 30
-        Instruction.convert_to_arduino_char('WEATHER - SNOWY')
+        'WEATHER - SNOWY'
       end
     end
 

@@ -16,6 +16,8 @@ module Personality
         
         # Save bot backlog
         cb.save!
+
+        return 'ACTION - NOD'
       elsif sensor_type == 'motion'
         # If motion data is significantly higher or lower than usual, comment about it
 
@@ -26,7 +28,7 @@ module Personality
         !Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.type = ? and inputs.data ~ '\"precipProbability\"=>(1|0\\.[5-9])'", motor.id, 'weather').exists?
         # We haven't seen precipitation probabilities above 0.5 yet, and now suddenly it's at 0.7
         # so tweet about how it's going to flash rain
-        
+
       end
     end
   end
