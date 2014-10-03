@@ -10,8 +10,12 @@ class Cleverbot < ActiveRecord::Base
   validates :username, presence: true
   validates :brain, presence: true
 
-  def think(input)
-    bot.think input
+  def think(input, output = nil)
+    if output
+      bot.puppet(input, output)
+    else
+      bot.think(input)
+    end
   end
 
   def backlog

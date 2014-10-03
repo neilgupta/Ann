@@ -1,3 +1,5 @@
+# Based on code from https://github.com/gabrielecirulli/cleverbot-api
+
 require 'digest/md5'
 
 class CleverBot
@@ -24,17 +26,17 @@ class CleverBot
     response_data = []
     response_data[8] = thought
     response_data[16] = answer
-    response = CleverBotResponse.new response_data
-    @backlog.push response
+    response = CleverBotResponse.new(response_data)
+    @backlog.push(response)
     response.answer
   end
 
-  def think thought
+  def think(thought)
     @post_params['stimulus'] = thought
     response_data = make_request
     save_post response_data
-    response = CleverBotResponse.new response_data
-    @backlog.push response
+    response = CleverBotResponse.new(response_data)
+    @backlog.push(response)
     response.answer
   end
 
@@ -51,15 +53,15 @@ class CleverBot
 
   def make_request
     query_string = build_query
-    result = RestClient.post @service_uri, query_string
-    return result.body.split "\r"
+    result = RestClient.post(@service_uri, query_string)
+    return result.body.split("\r")
   end
 
   def to_querystring(hsh = @post_params)
     hsh.map { |pair| "#{URI::encode pair.first.to_s}=#{URI::encode pair.last.to_s}" }.join('&')
   end
 
-  def save_post response
+  def save_post(response)
     {
       sessionid: 1,
       logurl: 2,
@@ -92,7 +94,7 @@ end
 class CleverBotResponse
   attr_reader :question, :answer
 
-  def initialize response_data
+  def initialize(response_data)
     @question = response_data[8]
     @answer   = response_data[16]
   end

@@ -11,6 +11,6 @@ class Motor < ActiveRecord::Base
     personality_class = "Personality::#{personality}".constantize
     personality_engine = personality_class.new
     instruction = personality_engine.react(self, sensor_type, data)
-    instructions.create!(instruction) if instruction
+    instructions.create!(content: instruction) if instruction && address
   end
 end
