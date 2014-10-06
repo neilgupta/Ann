@@ -25,7 +25,7 @@ module Personality
         # If sound data is significantly higher or lower than usual, comment about it
 
       elsif sensor_type == 'weather' && data.precipProbability > 0.7
-        !Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.type = ? and inputs.data ~ '\"precipProbability\"=>(1|0\\.[5-9])'", motor.id, 'weather').exists?
+        !Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.type = 'weather' and inputs.data ~ '\"precipProbability\"=>(1|0\\.[5-9])'", motor.id).exists?
         # We haven't seen precipitation probabilities above 0.5 yet, and now suddenly it's at 0.7
         # so tweet about how it's going to flash rain
 

@@ -1,4 +1,8 @@
+require 'personality/api'
+require 'personality/monkey'
 require 'personality/random'
+require 'personality/social'
+require 'personality/weather'
 
 module Personality
   class Base
@@ -6,7 +10,8 @@ module Personality
       # Announcements override all individual personality behaviors
       if sensor_type == 'twitter' && 
           data.entities.hashtags.include?('announcement') && 
-          data.user.screen_name.downcase.in?(['monkeybars_chi', 'neilgupta', '1871chicago'])
+          # Whitelist monkeybars staff, 1871, cisco, and myself to be able to post #announcements
+          data.user.screen_name.downcase.in?(['monkeybars_chi', 'neilgupta', '1871chicago', 'ciscogeeks', 'cisco_iot', 'amadeus98', 'doitjay'])
         # Retweet announcement
         twitter_client.retweet([data])
         # Send flocks into alert mode!
