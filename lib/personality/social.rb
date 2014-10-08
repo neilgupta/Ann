@@ -3,6 +3,9 @@ module Personality
     def generate_reaction(motor, sensor_type, data)
       # Reply to tweets or generate tweets depending on other sensor data
       if sensor_type == 'twitter'
+        # Don't respond to this tweet if it's captured by API
+        return if Api.generate_reaction(motor, sensor_type, data)
+
         user = data.user.screen_name
         # Find this user's chat history
         cb = motor.brain.cleverbots.find_or_create_by!(username: user)
