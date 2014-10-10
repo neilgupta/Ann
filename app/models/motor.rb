@@ -1,10 +1,10 @@
 class Motor < ActiveRecord::Base
-  attr_accessible :name, :address, :type, :personality
+  attr_accessible :name, :address, :motor_type, :personality
   has_many :instructions
   belongs_to :brain
 
   validates :brain, presence: true
-  validates :type, presence: true
+  validates :motor_type, presence: true
   validates :personality, presence: true
 
   def received_data(sensor_type, data)

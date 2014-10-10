@@ -2,7 +2,7 @@ namespace :ann do
   desc "Fetch weather data. This should be scheduled to run at a regular interval (10-60 min)"
   task :weather => :environment do
     # Loop through all active weather sensors
-    Sensor.active.where(type: 'weather').each do |sensor|
+    Sensor.active.where(sensor_type: 'weather').each do |sensor|
       # address = '41.888194,-87.635412' # Lat/long for 1871
       lat, long = sensor.address.split(',')
       forecast = ForecastIO.forecast(lat, long, params: {exclude: 'minutely,hourly,daily,alerts,flags'})
@@ -31,7 +31,7 @@ namespace :ann do
     # as set to follow different twitter accounts.
     # 
     # For now, I will settle for just randomly picking one twitter sensor per brain.
-    sensors = Sensor.active.select("DISTINCT ON (brain_id) *").where(type: 'twitter')
+    sensors = Sensor.active.select("DISTINCT ON (brain_id) *").where(sensor_type: 'twitter')
 
     topics = ['iotwfhack', 'hashtag2']
     streaming_client.user(:track => topics.join(',')) do |status|

@@ -14,6 +14,14 @@ http://ann.metamorphium.com
 
 You will also want to set up a cron job to run `foreman run rake ann:weather` every 10 - 60 minutes.
 
+You'll also need to manually setup your brain and sensors because the UI is not yet implemented.
+
+```bash
+$ foreman run rails c
+> brain = Brain.create!(name: 'IoT Hackathon', address: 'unknown')
+> motion1 = brain.sensors.create!(name: 'Entrance', address: 'u1', sensor_type: 'motion')
+> flock1 = brain.motors.create!(name: 'Flock', address: 'f1', motor_type: 'flock', personality: 'random')
+
 ## Credits
 
 ### Forecast.io

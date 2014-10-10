@@ -8,7 +8,7 @@ module Personality
         # do something
 
         # if it's been more than 10 min since last motion, say hello!
-        unless Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.type = 'motion' and age(inputs.created_at) < interval '10 minutes'", motor.id).exists?
+        unless Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.sensor_type = 'motion' and age(inputs.created_at) < interval '10 minutes'", motor.id).exists?
           return 'ACTION - HELLO'
         end
 

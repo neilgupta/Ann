@@ -5,7 +5,7 @@ module Personality
       extrovert_score = brain.extroversion_score
 
       # Find the last time somebody interacted with Ann
-      last_interaction = Input.joins(sensor: :brain).where("brains.id = ? and (sensors.type = 'monkey' or (sensors.type = 'twitter' and inputs.data ~ '\"user_mentions\":\[[^\]]*\"annsbrain\"\]'))").order("inputs.created_at desc").limit(1).pluck(:created_at).first
+      last_interaction = Input.joins(sensor: :brain).where("brains.id = ? and (sensors.sensor_type = 'monkey' or (sensors.sensor_type = 'twitter' and inputs.data ~ '\"user_mentions\":\[[^\]]*\"annsbrain\"\]'))").order("inputs.created_at desc").limit(1).pluck(:created_at).first
       # How long has it been since that interaction?
       diff_in_minutes = (Time.now - last_interaction)/60
 

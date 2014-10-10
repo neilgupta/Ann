@@ -49,12 +49,12 @@ module Personality
       #       group by s.date
       #       order by count(i.id) desc
       #   ").to_ary[0]
-      #   Input.joins(sensor: [brain: :motor]).select("generate_series(brains.activated_at, current_timestamp, '10 minutes'), count(inputs.id)").where("motors.id = ? and sensors.type = 'motion'", motor.id)
+      #   Input.joins(sensor: [brain: :motor]).select("generate_series(brains.activated_at, current_timestamp, '10 minutes'), count(inputs.id)").where("motors.id = ? and sensors.sensor_type = 'motion'", motor.id)
       # elsif sensor_type == 'sound'
       #   # If sound data is significantly higher or lower than usual, comment about it
 
       elsif sensor_type == 'weather' && data.precipProbability > 0.7
-        !Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.type = 'weather' and inputs.data ~ '\"precipProbability\"=>(1|0\\.[5-9])'", motor.id).exists?
+        !Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.sensor_type = 'weather' and inputs.data ~ '\"precipProbability\"=>(1|0\\.[5-9])'", motor.id).exists?
         # We haven't seen precipitation probabilities above 0.5 yet, and now suddenly it's at 0.7
         # so tweet about how it's going to rain
         twitter_client.update("When does it rain money? When there is change in the weather!")
