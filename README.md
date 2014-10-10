@@ -8,7 +8,9 @@ http://ann.metamorphium.com
 
 1. Copy `env.sample`, save as `.env`, and fill in information.
 2. `bundle install`
-3. `foreman start -p 3000`
+3. `rake db:create`
+4. `rake db:migrate`
+5. `foreman start -p 3000`
 
 You will also want to set up a cron job to run `foreman run rake ann:weather` every 10 - 60 minutes.
 

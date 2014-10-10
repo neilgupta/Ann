@@ -3,7 +3,7 @@ class Sensor < ActiveRecord::Base
   has_many :inputs
   belongs_to :brain
 
-  scope active, -> { joins(:brain).where("brains.active is true") }
+  scope :active, -> { joins(:brain).where("brains.active is true") }
 
   validates :type, presence: true
   validates :brain, presence: true
