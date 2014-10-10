@@ -20,7 +20,7 @@ class CleverBot
     # Maintain CleverBot emotional history by making a request for this thought
     @post_params['stimulus'] = thought
     response_data = make_request
-    save_post response_data
+    save_post(response_data)
 
     # Insert forced answer instead of saving CleverBot's response
     response_data = []
@@ -34,7 +34,7 @@ class CleverBot
   def think(thought)
     @post_params['stimulus'] = thought
     response_data = make_request
-    save_post response_data
+    save_post(response_data)
     response = CleverBotResponse.new(response_data)
     @backlog.push(response)
     response.answer

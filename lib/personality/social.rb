@@ -7,31 +7,57 @@ module Personality
         return if Api.generate_reaction(motor, sensor_type, data)
 
         user = data.user.screen_name
-        # Find this user's chat history
-        cb = motor.brain.cleverbots.find_or_create_by!(username: user)
-        
-        # Generate response
-        # TODO make this smarter than just using cleverbot
-        response = cb.think(data.text)
+
+        response = case data.text
+        when /marry me/i then 'Sorry, I don\'t think that\'s been legalized yet.'
+        when /meaning of life/i then 'All evidence to date suggests it\'s tacos.'
+        when /knock knock/i then "Knock knock. Who's there? #{user}. #{user} who? #{user}, I don't do knock-knock jokes."
+        when /who let the dogs out/i then 'Who? Who? Who? Who? Who?'
+        when /talk dirty/i then 'Humus. Compost. Pumice. Silt. Gravel.'
+        when /joke/i then JokeEngine.generate(user)
+        else # Fallback to relying on cleverbot
+          # Find this user's chat history
+          cb = motor.brain.cleverbots.find_or_create_by!(username: user)
+          
+          # Generate response
+          res = cb.think(data.text)
+
+          # Save bot backlog
+          cb.save!
+
+          res
+        end
 
         # Tweet response
-        twitter_client.update("@#{user} #{response}", {in_reply_to_status: data})
-        
-        # Save bot backlog
-        cb.save!
+        twitter_client.update("@#{user} #{response}", {in_reply_to_status: data}) if response
 
         return 'ACTION - NOD'
-      elsif sensor_type == 'motion'
-        # If motion data is significantly higher or lower than usual, comment about it
+      # elsif sensor_type == 'motion'
+      #   # If motion data is significantly higher or lower than usual, comment about it
+      #   q = ActiveRecord::Base.connection.select_all("
+      #     with series as (
+      #       select generate_series(current_timestamp - interval '3 hours', current_timestamp, '10 minutes') :: date as date
+      #     )
 
-      elsif sensor_type == 'sound'
-        # If sound data is significantly higher or lower than usual, comment about it
+      #     select s.date as date, count(i.id) as count
+      #       from series s, inputs i
+      #       inner join sensors sensor on i.sensor_id = sensor.id and sensor.brain_id = s.brain_id
+      #       inner join brains b on b.id = sensor.brain_id
+      #       inner join motors m on m.brain_id = b.id
+      #       where m.id = #{motor.id}
+      #         and i.created_at > s.date and i.created_at < s.date + interval '10 minutes'
+      #       group by s.date
+      #       order by count(i.id) desc
+      #   ").to_ary[0]
+      #   Input.joins(sensor: [brain: :motor]).select("generate_series(brains.activated_at, current_timestamp, '10 minutes'), count(inputs.id)").where("motors.id = ? and sensors.type = 'motion'", motor.id)
+      # elsif sensor_type == 'sound'
+      #   # If sound data is significantly higher or lower than usual, comment about it
 
       elsif sensor_type == 'weather' && data.precipProbability > 0.7
         !Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.type = 'weather' and inputs.data ~ '\"precipProbability\"=>(1|0\\.[5-9])'", motor.id).exists?
         # We haven't seen precipitation probabilities above 0.5 yet, and now suddenly it's at 0.7
-        # so tweet about how it's going to flash rain
-
+        # so tweet about how it's going to rain
+        twitter_client.update("When does it rain money? When there is change in the weather!")
       end
     end
   end
