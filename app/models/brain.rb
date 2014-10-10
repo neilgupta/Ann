@@ -9,10 +9,19 @@ class Brain < ActiveRecord::Base
   def activate
     active = true
     activated_at = Time.now
+    self.delay(run_at: Time.now.end_of_hour).chime
   end
 
   def deactivate
     active = false
+  end
+
+  def chime
+    motors.where(personality: 'Weather').each do |m|
+      m.instructions.create!(content: Instruction.convert_to_arduino_char('ACTION - CHIME'))
+    end
+
+    self.delay(run_at: Time.now.end_of_hour).chime
   end
 
   def fetch_instructions

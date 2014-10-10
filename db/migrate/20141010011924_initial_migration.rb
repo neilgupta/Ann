@@ -4,7 +4,7 @@ class InitialMigration < ActiveRecord::Migration
       t.string :name
       t.string :address
       t.float :extroversion_score
-      t.boolean :active, default: true
+      t.boolean :active, default: false
       t.timestamp :activated_at
 
       t.timestamps
