@@ -6,7 +6,9 @@ gem 'pg'
 gem 'puma'
 gem 'foreman', :groups => [:development, :test]
 gem 'rails_12factor', group: :production
+gem 'delayed_job_active_record'
 
 gem 'rest-client'
 gem 'twitter', '~> 5.0'
 gem 'forecast_io'
+gem 'chuck'
