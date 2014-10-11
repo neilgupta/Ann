@@ -17,7 +17,7 @@ module Personality
       if sensor_type == 'monkey'
         # Gain half an extroversion point everytime somebody picks up the monkey
         extrovert_score += 0.5 if extrovert_score < 100
-      elsif sensor_type == 'twitter' && data.entities.user_mentions.include?('annsbrain')
+      elsif sensor_type == 'twitter'
         # Gain an extroversion point everytime somebody tweets at us
         extrovert_score += 1 if extrovert_score < 100
         emotion = case data.text

@@ -3,7 +3,7 @@ class BrainsController < ApplicationController
   # Streaming set of instructions for CNS to disseminate
   def instructions
     brain = Brain.find_by_address(params[:address])
-    render json: brain.reload.fetch_instructions, root: false
+    render json: brain.fetch_instructions, root: false
   end
 
   # Endpoint for pushing sensory data to brain

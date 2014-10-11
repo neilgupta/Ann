@@ -26,9 +26,17 @@ class Brain < ActiveRecord::Base
 
   def fetch_instructions
     unsent_instructions = Instruction.where("motor_id IN (?) and sent_at is null", motors.pluck(:id))
-    unsent_instructions.map do |i|
+    
+    rehashed_instructions = {}
+    unsent_instructions.each do |i|
       i.touch(:sent_at)
-      {content: i.content, motor: i.motor.address}
-    end.to_json
+      rehashed_instructions[i.motor.address] ||= []
+      rehashed_instructions[i.motor.address] << i.content
+    end
+
+    final_instructions = []
+    rehashed_instructions.each { |key, val| final_instructions = {content: val.join(''), address: key} }
+
+    final_instructions.to_json
   end
 end
