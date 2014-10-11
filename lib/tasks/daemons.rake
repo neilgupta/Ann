@@ -10,6 +10,16 @@ namespace :ann do
     end
   end
 
+  desc "Chime the clock every hour"
+  task :clock => :environment do
+    motors.where(personality: 'Weather').each do |m|
+      curr_hour = Time.use_zone('America/Chicago') { Time.now.hour }
+      curr_hour -= 12 if curr_hour > 12
+      curr_hour = "0#{curr_hour}" if curr_hour < 10
+      m.instructions.create!(content: "#{Instruction.convert_to_arduino_char('ACTION - CHIME'))}#{curr_hour}"
+    end
+  end
+
   desc "Read twitter user stream"
   task :twitter => :environment do
     streaming_client = Twitter::Streaming::Client.new do |config|
