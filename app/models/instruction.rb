@@ -14,9 +14,9 @@ class Instruction < ActiveRecord::Base
     when 'ACTION - STOP'      then 'e' # Stand still and turn off lights
     when 'ACTION - CHIME'     then 't' # Play an hourly chime given the hour number
     when 'ACTION - JOKE'      then 'p' # Play joke sound
-    when 'COLOR - GREEN'      then 'f' # Turn all lights green
-    when 'COLOR - BLUE'       then 'g' # Turn all lights blue
-    when 'COLOR - RED'        then 'k' # Turn all lights red
+    when 'COLOR - GREEN'      then 'g' # Turn all lights green
+    when 'COLOR - BLUE'       then 'w' # Turn all lights blue
+    when 'COLOR - RED'        then 'v' # Turn all lights red
     when 'WEATHER - SUNNY'    then 'i' # alternating blue and green ropes, play sunny sound
     when 'WEATHER - RAINY'    then 'o' # alternating blue and off, play rainy sound
     when 'WEATHER - CLOUDY'   then 'j' # 20% blue, 80% off

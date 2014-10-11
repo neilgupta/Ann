@@ -2,8 +2,6 @@
 
 http://ann.metamorphium.com
 
-
-
 ## Setup
 
 1. Copy `env.sample`, save as `.env`, and fill in information.
@@ -12,7 +10,7 @@ http://ann.metamorphium.com
 4. `rake db:migrate`
 5. `foreman start -p 3000`
 
-You will also want to set up a cron job to run `foreman run rake ann:weather` every 10 - 60 minutes.
+You will also want to set up a cron job to run `foreman run rake ann:weather` every 10 - 60 minutes and `rake ann:clock` every hour on the hour.
 
 You'll also need to manually setup your brain and sensors because the UI is not yet implemented.
 
@@ -20,7 +18,14 @@ You'll also need to manually setup your brain and sensors because the UI is not 
 $ foreman run rails c
 > brain = Brain.create!(name: 'IoT Hackathon', address: 'unknown')
 > motion1 = brain.sensors.create!(name: 'Entrance', address: 'u1', sensor_type: 'motion')
-> flock1 = brain.motors.create!(name: 'Flock', address: 'f1', motor_type: 'flock', personality: 'random')
+> motion2 = brain.sensors.create!(name: 'Auditorium', address: 'u2', sensor_type: 'motion')
+> monkey = brain.sensors.create!(name: 'Monkey', address: '\x00\x13\xA2\x00\x40\x68\x2E\x8C', sensor_type: 'monkey')
+> weather = brain.sensors.create!(name: 'Weather', sensor_type: 'weather')
+> twitter = brain.sensors.create!(name: '@AnnsBrain', sensor_type: 'twitter')
+> flock1 = brain.motors.create!(name: 'Flock 1', address: 'f1', motor_type: 'flock', personality: 'Random')
+> flock2 = brain.motors.create!(name: 'Flock 2', address: 'f2', motor_type: 'flock', personality: 'Random')
+> 
+```
 
 ## Credits
 
