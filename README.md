@@ -23,7 +23,7 @@ $ foreman run rails c
 > weather = brain.sensors.create!(name: 'Weather', sensor_type: 'weather')
 > twitter = brain.sensors.create!(name: '@AnnsBrain', sensor_type: 'twitter')
 > flock1 = brain.motors.create!(name: 'Flock 1 (with sound)', address: '\x00\x13\xA2\x00\x40\x68\x2E\xA4', motor_type: 'flock', personality: 'Weather')
-> flock2 = brain.motors.create!(name: 'Flock 2 (with sound)', address: 'f2', motor_type: 'flock', personality: 'Monkey')
+> flock2 = brain.motors.create!(name: 'Flock 2 (with sound)', address: '\x00\x13\xA2\x00\x40\x68\x2E\xD6', motor_type: 'flock', personality: 'Motion')
 > flock3 = brain.motors.create!(name: 'Flock 3 (with sound)', address: 'f2', motor_type: 'flock', personality: 'Social')
 > flock4 = brain.motors.create!(name: 'Flock 4 (with sound)', address: 'f2', motor_type: 'flock', personality: 'Motion')
 > flock5 = brain.motors.create!(name: 'Flock 5', address: 'f2', motor_type: 'flock', personality: 'Api')
