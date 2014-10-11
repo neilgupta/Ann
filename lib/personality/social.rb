@@ -2,34 +2,36 @@ module Personality
   class Social < Base
     def generate_reaction(motor, sensor_type, data)
       # Reply to tweets or generate tweets depending on other sensor data
-      if sensor_type == 'twitter' && data.entities.user_mentions.include?('annsbrain')
-        # Don't respond to this tweet if it's captured by API
-        return if Api.generate_reaction(motor, sensor_type, data)
+      if sensor_type == 'twitter'
+        if data.entities.user_mentions.include?('annsbrain')
+          # Don't respond to this tweet if it's captured by API
+          return if Api.generate_reaction(motor, sensor_type, data)
 
-        user = data.user.screen_name
+          user = data.user.screen_name
 
-        response = case data.text
-        when /marry me/i then 'Sorry, I don\'t think that\'s been legalized yet.'
-        when /meaning of life/i then 'All evidence to date suggests it\'s tacos.'
-        when /knock knock/i then "Knock knock. Who's there? #{user}. #{user} who? #{user}, I don't do knock-knock jokes."
-        when /who let the dogs out/i then 'Who? Who? Who? Who? Who?'
-        when /talk dirty/i then 'Humus. Compost. Pumice. Silt. Gravel.'
-        when /joke/i then JokeEngine.generate(user)
-        else # Fallback to relying on cleverbot
-          # Find this user's chat history
-          cb = motor.brain.cleverbots.find_or_create_by!(username: user)
-          
-          # Generate response
-          res = cb.think(data.text)
+          response = case data.text
+          when /marry me/i then 'Sorry, I don\'t think that\'s been legalized yet.'
+          when /meaning of life/i then 'All evidence to date suggests it\'s tacos.'
+          when /knock knock/i then "Knock knock. Who's there? #{user}. #{user} who? #{user}, I don't do knock-knock jokes."
+          when /who let the dogs out/i then 'Who? Who? Who? Who? Who?'
+          when /talk dirty/i then 'Humus. Compost. Pumice. Silt. Gravel.'
+          when /joke/i then JokeEngine.generate(user)
+          else # Fallback to relying on cleverbot
+            # Find this user's chat history
+            cb = motor.brain.cleverbots.find_or_create_by!(username: user)
+            
+            # Generate response
+            res = cb.think(data.text)
 
-          # Save bot backlog
-          cb.save!
+            # Save bot backlog
+            cb.save!
 
-          res
+            res
+          end
+
+          # Tweet response
+          twitter_client.update("@#{user} #{response}", {in_reply_to_status: data}) if response
         end
-
-        # Tweet response
-        twitter_client.update("@#{user} #{response}", {in_reply_to_status: data}) if response
 
         return 'ACTION - NOD'
       # elsif sensor_type == 'motion'
