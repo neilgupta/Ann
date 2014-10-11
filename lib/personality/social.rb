@@ -2,7 +2,7 @@ module Personality
   class Social < Base
     def generate_reaction(motor, sensor_type, data)
       # Reply to tweets or generate tweets depending on other sensor data
-      if sensor_type == 'twitter'
+      if sensor_type == 'twitter' && data.entities.user_mentions.include?('annsbrain')
         # Don't respond to this tweet if it's captured by API
         return if Api.generate_reaction(motor, sensor_type, data)
 
