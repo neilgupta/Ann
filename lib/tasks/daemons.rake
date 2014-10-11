@@ -12,7 +12,7 @@ namespace :ann do
 
   desc "Chime the clock every hour"
   task :clock => :environment do
-    motors.where(personality: 'Weather').each do |m|
+    Motor.where(personality: 'Weather').each do |m|
       curr_hour = Time.use_zone('America/Chicago') { Time.now.hour }
       curr_hour -= 12 if curr_hour > 12
       curr_hour = "0#{curr_hour}" if curr_hour < 10
