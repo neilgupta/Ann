@@ -16,15 +16,18 @@ You'll also need to manually setup your brain and sensors because the UI is not 
 
 ```bash
 $ foreman run rails c
-> brain = Brain.create!(name: 'IoT Hackathon', address: 'unknown')
-> motion1 = brain.sensors.create!(name: 'Entrance', address: 'u1', sensor_type: 'motion')
-> motion2 = brain.sensors.create!(name: 'Auditorium', address: 'u2', sensor_type: 'motion')
+> brain = Brain.create!(name: 'IoT Hackathon', address: '\x00\x13\xA2\x00\x40\x68\x2F\xB6')
+> motion1 = brain.sensors.create!(name: 'Entrance', address: '\x00\x13\xA2\x00\x40\x68\x2F\xC0', sensor_type: 'motion') # orange cable
+> motion2 = brain.sensors.create!(name: 'Auditorium', address: '\x00\x13\xA2\x00\x40\x60\xCE\x3B', sensor_type: 'motion') # red cable
 > monkey = brain.sensors.create!(name: 'Monkey', address: '\x00\x13\xA2\x00\x40\x68\x2E\x8C', sensor_type: 'monkey')
 > weather = brain.sensors.create!(name: 'Weather', sensor_type: 'weather')
 > twitter = brain.sensors.create!(name: '@AnnsBrain', sensor_type: 'twitter')
-> flock1 = brain.motors.create!(name: 'Flock 1', address: 'f1', motor_type: 'flock', personality: 'Random')
-> flock2 = brain.motors.create!(name: 'Flock 2', address: 'f2', motor_type: 'flock', personality: 'Random')
-> 
+> flock1 = brain.motors.create!(name: 'Flock 1 (with sound)', address: '\x00\x13\xA2\x00\x40\x68\x2E\xA4', motor_type: 'flock', personality: 'Weather')
+> flock2 = brain.motors.create!(name: 'Flock 2 (with sound)', address: 'f2', motor_type: 'flock', personality: 'Monkey')
+> flock3 = brain.motors.create!(name: 'Flock 3 (with sound)', address: 'f2', motor_type: 'flock', personality: 'Social')
+> flock4 = brain.motors.create!(name: 'Flock 4 (with sound)', address: 'f2', motor_type: 'flock', personality: 'Motion')
+> flock5 = brain.motors.create!(name: 'Flock 5', address: 'f2', motor_type: 'flock', personality: 'Api')
+> flock6 = brain.motors.create!(name: 'Flock 6', address: 'f2', motor_type: 'flock', personality: 'Random')
 ```
 
 ## Credits
