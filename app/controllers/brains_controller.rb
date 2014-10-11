@@ -10,7 +10,7 @@ class BrainsController < ApplicationController
   def senses
     brain = Brain.find_by_address(params[:address])
 
-    sensor = Sensor.where("address = ? and brain_id = ?", params[:address], brain.id).first
+    sensor = Sensor.where("address = ? and brain_id = ?", params[:sensor_addr], brain.id).first
     sensor.save_data(params[:payload]) if sensor && params[:payload]
 
     head :ok # return empty 200 response
