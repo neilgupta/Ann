@@ -5,13 +5,12 @@ module Personality
 
       if sensor_type == 'motion'
 
-        # do something
-        
-
         # if it's been more than 10 min since last motion, say hello!
         unless Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.sensor_type = 'motion' and age(inputs.created_at) < interval '10 minutes'", motor.id).exists?
           return 'ACTION - JOKE'
         end
+
+        return 'EMOTION - STARTLED'
 
       elsif sensor_type == 'sound'
 
