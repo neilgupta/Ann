@@ -26,7 +26,7 @@ class Brain < ActiveRecord::Base
     end
 
     final_instructions = []
-    rehashed_instructions.each { |key, val| final_instructions = {content: val.join(''), address: key} }
+    rehashed_instructions.each { |key, val| final_instructions << {content: val.join(''), address: key} }
 
     final_instructions.to_json
   end
