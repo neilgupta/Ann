@@ -2,6 +2,12 @@
 
 http://ann.metamorphium.com
 
+Ann is an AI that collects sensor data from the environment to analyze and generate appropriate responses. It was built for the Cisco IoT 2014 Hackathon in Chicago, and can be used to automate and control various aspects of managing an event.
+
+Ann uses the concept of sensor neurons as inputs, allowing you to plug in any data source, and motor neurons as outputs, allowing you to control any internet-connected device or service. For example, Ann can reply to tweets, make announcements, track movement, or control the lights.
+
+Each output can be assigned its own personality, which is a set of rules for how to behave given an input. You may also want to look at [AnnCNS](https://github.com/neilgupta/AnnCNS), which allows a Raspberry Pi to send and receive data between Ann and a local Xbee network, and [SensorNeurons](https://github.com/neilgupta/SensorNeurons), a couple sample Arduino projects for collecting analog sensor data and passing it over xbee radios.
+
 ## Setup
 
 1. Copy `env.sample`, save as `.env`, and fill in information.
