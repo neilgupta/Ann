@@ -43,7 +43,7 @@ namespace :ann do
     # For now, I will settle for just randomly picking one twitter sensor per brain.
     sensors = Sensor.active.select("DISTINCT ON (brain_id) *").where(sensor_type: 'twitter')
 
-    topics = ['iotwfhack']
+    topics = ['monkeybars', '1871']
     streaming_client.user(:track => topics.join(',')) do |status|
       # Loop through active twitter sensors
       sensors.each { |sensor| sensor.save_data(status, status.to_h) } if status.is_a?(Twitter::Tweet)

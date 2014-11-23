@@ -3,9 +3,9 @@ module Personality
     def react(motor, sensor_type, data)
       # Announcements override all individual personality behaviors
       if sensor_type == 'twitter' && 
-          data.entities.hashtags.include?('announcement') && 
-          # Whitelist monkeybars staff, 1871, cisco, and myself to be able to post #announcements
-          data.user.screen_name.downcase.in?(['monkeybars_chi', 'neilgupta', '1871chicago', 'ciscogeeks', 'cisco_iot', 'amadeus98', 'doitjay'])
+          data.entities.hashtags.include?('ann') && 
+          # Whitelist monkeybars staff, 1871, cisco, and myself to be able to post #ann announcements
+          data.user.screen_name.downcase.in?(['monkeybars_chi', 'neilgupta', '1871chicago', 'amadeus98', 'doitjay'])
         # Retweet announcement
         twitter_client.retweet([data])
         # Send flocks into alert mode!
