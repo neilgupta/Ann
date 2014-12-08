@@ -12,7 +12,7 @@ module Personality
           response = case data.text
           when /marry me/i then 'Sorry, I don\'t think that\'s been legalized yet.'
           when /meaning of life/i then 'All evidence to date suggests it\'s tacos.'
-          when /knock knock/i then "Knock knock. Who's there? #{user}. #{user} who? #{user}, I don't do knock-knock jokes."
+          when /knock knock/i then "Knock knock. \nWho's there? \n#{user}. \n#{user} who? \n#{user}, I don't do knock-knock jokes."
           when /who let the dogs out/i then 'Who? Who? Who? Who? Who?'
           when /talk dirty/i then 'Humus. Compost. Pumice. Silt. Gravel.'
           when /joke/i then JokeEngine.generate(user)
@@ -55,11 +55,11 @@ module Personality
       # elsif sensor_type == 'sound'
       #   # If sound data is significantly higher or lower than usual, comment about it
 
-      elsif sensor_type == 'weather' && data.precipProbability > 0.7
-        !Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.sensor_type = 'weather' and inputs.data ~ '\"precipProbability\"=>(1|0\\.[5-9])'", motor.id).exists?
-        # We haven't seen precipitation probabilities above 0.5 yet, and now suddenly it's at 0.7
-        # so tweet about how it's going to rain
-        twitter_client.update("When does it rain money? When there is change in the weather!")
+      # elsif sensor_type == 'weather' && data.precipProbability > 0.7
+      #   !Input.joins(sensor: [brain: :motor]).where("motors.id = ? and sensors.sensor_type = 'weather' and inputs.data ~ '\"precipProbability\"=>(1|0\\.[5-9])'", motor.id).exists?
+      #   # We haven't seen precipitation probabilities above 0.5 yet, and now suddenly it's at 0.7
+      #   # so tweet about how it's going to rain
+      #   twitter_client.update("When does it rain money? When there is change in the weather!")
       end
     end
   end

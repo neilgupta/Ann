@@ -12,7 +12,7 @@ class Sensor < ActiveRecord::Base
     return unless data
 
     # If serializable_data is not provided, assume data is serializable
-    inputs.create!(data: JSON.generate(serializable_data || data))
+    # inputs.create!(data: JSON.generate(serializable_data || data))
 
     # Notify all motors
     brain.motors.each {|m| m.received_data(sensor_type, data)}
