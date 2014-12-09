@@ -3,11 +3,11 @@ module Personality
     def generate_reaction(motor, sensor_type, data)
       # Reply to tweets or generate tweets depending on other sensor data
       if sensor_type == 'twitter'
-        if data.entities.user_mentions.include?('annsbrain')
+        if data.to_h[:entities][:user_mentions].map{|u|u[:screen_name].downcase}.include?('annsbrain')
           # Don't respond to this tweet if it's captured by API
-          return if Api.generate_reaction(motor, sensor_type, data)
+          # return if Api.new.generate_reaction(motor, sensor_type, data)
 
-          user = data.user.screen_name
+          user = data.to_h[:user][:screen_name]
 
           response = case data.text
           when /marry me/i then 'Sorry, I don\'t think that\'s been legalized yet.'
