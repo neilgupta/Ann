@@ -20,7 +20,7 @@ module Personality
       when '@annsbrain blue'
         'COLOR - BLUE'
       when '@annsbrain rain'
-        'WEATHER - RAIN'
+        'WEATHER - RAINY'
       end
     end
   end
