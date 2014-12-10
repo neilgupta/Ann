@@ -21,6 +21,8 @@ module Personality
         'COLOR - BLUE'
       when '@annsbrain rain'
         'WEATHER - RAINY'
+      else
+        false
       end
     end
   end
