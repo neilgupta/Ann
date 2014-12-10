@@ -22,7 +22,7 @@ module Personality
       when '@annsbrain rain'
         'WEATHER - RAINY'
       else
-        false
+        nil
       end
     end
   end
