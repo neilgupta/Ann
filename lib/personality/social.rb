@@ -33,7 +33,7 @@ module Personality
           twitter_client.update("@#{user} #{response}", {in_reply_to_status: data}) if response
         end
 
-        return 'ACTION - NOD'
+        return Random.new.generate_reaction(motor, sensor_type, data)
       # elsif sensor_type == 'motion'
       #   # If motion data is significantly higher or lower than usual, comment about it
       #   q = ActiveRecord::Base.connection.select_all("
