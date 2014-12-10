@@ -19,6 +19,8 @@ module Personality
         'COLOR - RED'
       when 'blue'
         'COLOR - BLUE'
+      when 'rain'
+        'WEATHER - RAIN'
       end
     end
   end

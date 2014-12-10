@@ -5,7 +5,8 @@ module Personality
       if sensor_type == 'twitter'
         if data.to_h[:entities][:user_mentions].map{|u|u[:screen_name].downcase}.include?('annsbrain')
           # Don't respond to this tweet if it's captured by API
-          # return if Api.new.generate_reaction(motor, sensor_type, data)
+          api_command = Api.new.generate_reaction(motor, sensor_type, data)
+          return if api_command if api_command
 
           user = data.to_h[:user][:screen_name]
 
