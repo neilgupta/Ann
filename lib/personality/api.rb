@@ -5,21 +5,21 @@ module Personality
 
       # Allow tweets to command flocks
       case data.text.downcase
-      when 'dance'
+      when '@annsbrain dance'
         'ACTION - DANCE'
-      when 'rotate'
+      when '@annsbrain rotate'
         'ACTION - ROTATE'
-      when 'nod'
+      when '@annsbrain nod'
         'ACTION - NOD'
-      when 'stop'
+      when '@annsbrain stop'
         'ACTION - STOP'
-      when 'green'
+      when '@annsbrain green'
         'COLOR - GREEN'
-      when 'red'
+      when '@annsbrain red'
         'COLOR - RED'
-      when 'blue'
+      when '@annsbrain blue'
         'COLOR - BLUE'
-      when 'rain'
+      when '@annsbrain rain'
         'WEATHER - RAIN'
       end
     end
