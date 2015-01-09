@@ -20,9 +20,9 @@ class Brain < ActiveRecord::Base
     
     rehashed_instructions = {}
     unsent_instructions.each do |i|
-      i.touch(:sent_at)
       rehashed_instructions[i.motor.address] ||= []
       rehashed_instructions[i.motor.address] << i.content
+      i.delete
     end
 
     final_instructions = []

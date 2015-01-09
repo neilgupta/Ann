@@ -15,6 +15,7 @@ class Sensor < ActiveRecord::Base
     # inputs.create!(data: JSON.generate(serializable_data || data))
 
     # Notify all motors
-    brain.motors.each {|m| m.received_data(sensor_type, data)}
+    type_of_sensor = sensor_type == 'twitter' && data == :follow ? 'twitter_event' : sensor_type
+    brain.motors.each {|m| m.received_data(type_of_sensor, data)}
   end
 end

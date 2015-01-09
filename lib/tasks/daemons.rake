@@ -20,13 +20,29 @@ namespace :ann do
     end
   end
 
+  desc "Read 1871 tweet events"
+  task :twitter_1871 => :environment do
+    streaming_client = Twitter::Streaming::Client.new do |config|
+      config.consumer_key        = ENV['1871_TWITTER_CONSUMER_KEY']
+      config.consumer_secret     = ENV['1871_TWITTER_CONSUMER_SECRET']
+      config.access_token        = ENV['1871_TWITTER_OAUTH_TOKEN']
+      config.access_token_secret = ENV['1871_TWITTER_OAUTH_SECRET']
+    end
+
+    sensors = Sensor.active.select("DISTINCT ON (brain_id) *").where(sensor_type: 'twitter')
+
+    streaming_client.user do |status|
+      sensors.each { |sensor| sensor.save_data(status.name) } if status.is_a?(Twitter::Streaming::Event) && status.name == :follow
+    end
+  end
+
   desc "Read twitter user stream"
   task :twitter => :environment do
     streaming_client = Twitter::Streaming::Client.new do |config|
-      config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
-      config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
-      config.access_token        = ENV['TWITTER_OAUTH_TOKEN']
-      config.access_token_secret = ENV['TWITTER_OAUTH_SECRET']
+      config.consumer_key        = ENV['1871_TWITTER_CONSUMER_KEY']
+      config.consumer_secret     = ENV['1871_TWITTER_CONSUMER_SECRET']
+      config.access_token        = ENV['1871_TWITTER_OAUTH_TOKEN']
+      config.access_token_secret = ENV['1871_TWITTER_OAUTH_SECRET']
     end
 
     # Fetch one twitter sensor per brain and store in memory before streaming.
@@ -43,10 +59,11 @@ namespace :ann do
     # For now, I will settle for just randomly picking one twitter sensor per brain.
     sensors = Sensor.active.select("DISTINCT ON (brain_id) *").where(sensor_type: 'twitter')
 
-    topics = ['monkeybars_chi', '1871chicago']
+    topics = ['monkeybars_chi', 'annsbrain', 'neilgupta']
     streaming_client.user(:track => topics.join(',')) do |status|
       # Loop through active twitter sensors
       sensors.each { |sensor| sensor.save_data(status, status.to_h) } if status.is_a?(Twitter::Tweet)
+      sensors.each { |sensor| sensor.save_data(status.name) } if status.is_a?(Twitter::Streaming::Event) && status.name == :follow
     end
   end
 end
