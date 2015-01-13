@@ -21,5 +21,7 @@ module Ann
     # config.i18n.default_locale = :de
 
     config.autoload_paths << Rails.root.join('lib')
+
+    config.action_mailer.delivery_method = :amazon_ses
   end
 end

@@ -64,6 +64,7 @@ namespace :ann do
       # Loop through active twitter sensors
       sensors.each { |sensor| sensor.save_data(status.name) } if status.is_a?(Twitter::Streaming::Event) && status.name == :follow
       sensors.each { |sensor| sensor.save_data(status, status.to_h) } if status.is_a?(Twitter::Tweet) && status.to_h[:entities][:user_mentions].map{|u|u[:screen_name].downcase}.include?('annsbrain')
+      sensors.each { |sensor| ErrorMailer.error_report.deliver if sensor.brain.last_polled && sensor.brain.last_polled < 5.minutes.ago }
     end
   end
 end

@@ -1,5 +1,5 @@
 class Brain < ActiveRecord::Base
-  attr_accessible :name, :address, :extroversion_score, :active, :activated_at
+  attr_accessible :name, :address, :extroversion_score, :active, :activated_at, :last_polled
   has_many :sensors
   has_many :motors
   has_many :cleverbots
@@ -16,6 +16,8 @@ class Brain < ActiveRecord::Base
   end
 
   def fetch_instructions
+    self.touch(:last_polled)
+
     unsent_instructions = Instruction.where("motor_id IN (?) and sent_at is null", motors.pluck(:id))
     
     rehashed_instructions = {}
