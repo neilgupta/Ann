@@ -1,5 +1,5 @@
 class Brain < ActiveRecord::Base
-  attr_accessible :name, :address, :extroversion_score, :active, :activated_at, :last_polled
+  attr_accessible :name, :address, :extroversion_score, :active, :activated_at, :last_polled, :last_error_email_sent
   has_many :sensors
   has_many :motors
   has_many :cleverbots

@@ -64,7 +64,14 @@ namespace :ann do
       # Loop through active twitter sensors
       sensors.each { |sensor| sensor.save_data(status.name) } if status.is_a?(Twitter::Streaming::Event) && status.name == :follow
       sensors.each { |sensor| sensor.save_data(status, status.to_h) } if status.is_a?(Twitter::Tweet) && status.to_h[:entities][:user_mentions].map{|u|u[:screen_name].downcase}.include?('annsbrain')
-      ErrorMailer.error_report.deliver if Brain.first.try(:last_polled).try(:<, 5.minutes.ago) && Brain.first.try(:last_polled).try(:>, 5.minutes.ago - 20)
+      
+      # Hacky error tracking
+      b = Brain.first
+      if b.last_polled.try(:<, 5.minutes.ago) &&                                          # last poll was before 5 min ago
+        (b.last_error_email_sent.nil? || b.last_error_email_sent.try(:<, b.last_polled))  # and error email never sent or sent before last poll
+        ErrorMailer.error_report.deliver
+        b.touch(:last_error_email_sent)
+      end
     end
   end
 end
