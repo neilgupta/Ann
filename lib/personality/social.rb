@@ -19,6 +19,7 @@ module Personality
           when /who let the dogs out/i then 'Who? Who? Who? Who? Who?'
           when /talk dirty/i then 'Humus. Compost. Pumice. Silt. Gravel.'
           when /joke/i then JokeEngine.generate(user)
+          when /weather/i then WeatherEngine.generate
           else # Fallback to relying on cleverbot
             # Find this user's chat history
             cb = motor.brain.cleverbots.find_or_create_by!(username: user)
