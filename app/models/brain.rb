@@ -19,7 +19,7 @@ class Brain < ActiveRecord::Base
     self.touch(:last_polled)
 
     i = Instruction.where("motor_id IN (?)", motors.pluck(:id)).first
-    final_instructions = [{content: i.content, address: i.motor.address}]
+    final_instructions = [{content: i.content, address: i.motor.address, timer: Instruction.flock_timer(i.content)}]
     i.delete
 
     final_instructions.to_json
