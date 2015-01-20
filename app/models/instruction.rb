@@ -37,7 +37,7 @@ class Instruction < ActiveRecord::Base
 
   def self.flock_timer(action)
     case action
-    when 'a' then 27
+    when 'a' then 26
     when 'b' then 15
     when 'c' then 15
     when 'd' then 14
