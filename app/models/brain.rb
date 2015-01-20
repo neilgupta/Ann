@@ -18,9 +18,13 @@ class Brain < ActiveRecord::Base
   def fetch_instructions
     self.touch(:last_polled)
 
-    i = Instruction.where("motor_id IN (?)", motors.pluck(:id)).first
-    final_instructions = [{content: i.content, address: i.motor.address, timer: Instruction.flock_timer(i.content)}]
-    i.delete
+    # Return last 10 instructions
+    instructions = Instruction.where("motor_id IN (?)", motors.pluck(:id)).last(10)
+    final_instructions = []
+    instructions.each do |i|
+      final_instructions << {content: i.content, timer: Instruction.flock_timer(i.content)}
+      i.delete
+    end
 
     final_instructions.to_json
   end
